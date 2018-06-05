@@ -2,18 +2,13 @@ package in.flexsol.controller.greeting;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-
-import javax.xml.ws.http.HTTPBinding;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import in.flexsol.modal.greeting.Greeting;
 import in.flexsol.service.greeting.GreetingService;
