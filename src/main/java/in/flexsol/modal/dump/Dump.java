@@ -1,10 +1,9 @@
 package in.flexsol.modal.dump;
 
-import org.json.JSONObject;
 
 public class Dump {
 		int id;
-		JSONObject dump;
+		String dump;
 		String createdOn;
 		String origin;
 		public int getId() {
@@ -16,17 +15,17 @@ public class Dump {
 		public String getCreatedOn() {
 			return createdOn;
 		}
-		public JSONObject getDump() {
-			return dump;
-		}
-		public void setDump(JSONObject dump) {
-			this.dump = dump;
-		}
 		public void setCreatedOn(String createdOn) {
 			this.createdOn = createdOn;
 		}
 		public String getOrigin() {
 			return origin;
+		}
+		public String getDump() {
+			return dump;
+		}
+		public void setDump(String dump) {
+			this.dump = dump;
 		}
 		public void setOrigin(String origin) {
 			this.origin = origin;

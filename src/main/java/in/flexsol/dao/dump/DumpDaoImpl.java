@@ -22,7 +22,7 @@ public class DumpDaoImpl implements DumpDao {
 	
 	@Override
 	public int saveDump(Dump dump) {
-		String sql = "insert into dump_master (dump,origin) values (?,?,?)";
+		String sql = "insert into dump_master (dump,origin) values (?,?)";
 		return jdbcTemplate.update(sql,new Object[] {dump.getDump(),dump.getOrigin()});
 	}
 

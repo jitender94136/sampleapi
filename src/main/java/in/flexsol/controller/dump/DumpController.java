@@ -4,15 +4,12 @@ package in.flexsol.controller.dump;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,13 +23,15 @@ public class DumpController {
 		@Autowired
 		DumpService dumpService;
 	
-	    @RequestMapping(value="/dump",method=org.springframework.web.bind.annotation.RequestMethod.POST,consumes= {"application/json"})
-	    public ResponseEntity<Integer> saveDump(HttpEntity<JSONObject> httpEntity,HttpServletRequest request) {
-				  
-	    		try {
+	    @RequestMapping(value="/dump",method=org.springframework.web.bind.annotation.RequestMethod.POST)
+	    public ResponseEntity<Integer> saveDump(@RequestBody String requestBody ,HttpServletRequest request) {
+				try {
 	    			 Dump dump = new Dump();
-	    			 JSONObject dumpData = httpEntity.getBody();
-				  	 dump.setDump(dumpData);
+	    			 if(requestBody != null && requestBody.trim().toString().isEmpty() == false) {
+	    				 requestBody = requestBody.replaceAll("\n", "");
+	    				 requestBody = requestBody.replaceAll("\\s", "");
+	    			 }
+	    			 dump.setDump(requestBody);
 			         dump.setOrigin(request.getRemoteAddr());
 			         int returnStatus = dumpService.saveDump(dump);
 			         return new ResponseEntity<Integer>(returnStatus, HttpStatus.OK);
@@ -43,7 +42,7 @@ public class DumpController {
 	    }
 	    
 	    
-	    @RequestMapping(value="/dump",method=org.springframework.web.bind.annotation.RequestMethod.GET,produces= {"application/json"})
+	    @RequestMapping(value="/dump",method=org.springframework.web.bind.annotation.RequestMethod.GET)
 	    public ResponseEntity<List<Dump>> getDump(@RequestParam(required=false,defaultValue = "0") int limit,@RequestParam(required=false,defaultValue = "0") int offset,@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date createdgte) {
 	    	List<Dump> dumpList = null;
 	    	HttpStatus status =  HttpStatus.OK;
