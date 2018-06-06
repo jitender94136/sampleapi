@@ -33,14 +33,20 @@ public class DumpDaoImpl implements DumpDao {
 					sql = "select * from dump_master order by id limit ? offset ?";
 					return jdbcTemplate.query(sql, new Object[] {limit,offset}, new BeanPropertyRowMapper<Dump>(Dump.class));
 		} else if(limit == 0 && offset == 0) {
-					sql = "select * from dump_master order by id created_on >= ?";
+					sql = "select * from dump_master where  created_on >= ? order by id";
 					return jdbcTemplate.query(sql, new Object[] {createdgte}, new BeanPropertyRowMapper<Dump>(Dump.class));
-		} else if(limit == 0) {
-					sql = "select * from dump_master order by id  offset ? created_on >= ?";
-					return jdbcTemplate.query(sql, new Object[] {offset,createdgte}, new BeanPropertyRowMapper<Dump>(Dump.class));
-		} else {
-					sql = "select * from dump_master order by id  limit ? created_on >= ?";
-					return jdbcTemplate.query(sql, new Object[] {limit,createdgte}, new BeanPropertyRowMapper<Dump>(Dump.class));
+		} else if(createdgte == null && limit == 0 && offset > 0) {
+					sql = "select * from dump_master order by id  offset ?";
+					return jdbcTemplate.query(sql, new Object[] {offset}, new BeanPropertyRowMapper<Dump>(Dump.class));
+		} else if(createdgte != null && limit > 0 && offset == 0) {
+					sql = "select * from dump_master where created_on >= ? order by id  limit ? ";
+					return jdbcTemplate.query(sql, new Object[] {createdgte,limit}, new BeanPropertyRowMapper<Dump>(Dump.class));
+		} else if(createdgte != null && limit == 0 && offset > 0) {
+			sql = "select * from dump_master where created_on >= ? order by id  offset ? ";
+			return jdbcTemplate.query(sql, new Object[] {createdgte,offset}, new BeanPropertyRowMapper<Dump>(Dump.class));
+        } else {
+					sql = "select * from dump_master order by id  limit ? ";
+					return jdbcTemplate.query(sql, new Object[] {limit}, new BeanPropertyRowMapper<Dump>(Dump.class));
 		}
 	}
 
