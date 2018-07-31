@@ -34,7 +34,7 @@ public class DumpController {
 	    			 dump.setDump(requestBody);
 			         dump.setOrigin(request.getRemoteAddr());
 			         int returnStatus = dumpService.saveDump(dump);
-			         return new ResponseEntity<String>(returnStatus+"|5|3", HttpStatus.OK);
+			         return new ResponseEntity<String>(returnStatus+"", HttpStatus.OK);
 	    		} catch(Exception e) {
 	    			e.printStackTrace();
 	    			return new ResponseEntity<String>("-1", HttpStatus.INTERNAL_SERVER_ERROR);
