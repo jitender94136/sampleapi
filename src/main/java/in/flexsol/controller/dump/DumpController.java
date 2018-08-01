@@ -29,9 +29,9 @@ public class DumpController {
 				try {
 	    			 Dump dump = new Dump();
 	    			 if(requestBody != null && requestBody.trim().toString().isEmpty() == false) {
-	    				 requestBody = requestBody.replaceAll("\n", "");
+	    				 //requestBody = requestBody.replaceAll("\n", "");
 	    				 requestBody = requestBody.replaceAll("\\s", "");
-	    				 requestBody = requestBody.replaceAll("\\\\", "");
+	    				 //requestBody = requestBody.replaceAll("\\\\", "");
 	    			 }
 	    			 dump.setDump(requestBody);
 			         dump.setOrigin(request.getRemoteAddr());
