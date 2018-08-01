@@ -1,11 +1,14 @@
 package in.flexsol.dao.dump;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import in.flexsol.modal.dump.Dump;
 
@@ -53,6 +56,21 @@ public class DumpDaoImpl implements DumpDao {
 	@Override
 	public List<Dump> fetchAll() {
 		String sql = "select * from dump_master";
-		return jdbcTemplate.query(sql,new BeanPropertyRowMapper<Dump>(Dump.class));
+		return jdbcTemplate.query(sql,new RowMapper<Dump>(){  
+				    @Override  
+				    public Dump mapRow(ResultSet rs, int rownumber) throws SQLException {  
+				    	Dump e = new Dump();  
+				        e.setId(rs.getInt("id"));
+				        String dump = rs.getString("dump");
+				        System.out.println(dump);
+				        if(dump != null && dump.length() > 0) {
+				        	dump = dump.replaceAll("\"", "'");
+				        }
+				        e.setDump(dump);
+				        e.setOrigin(rs.getString("origin"));
+				        e.setCreatedOn(rs.getString("created_on"));
+				        return e;  
+				    }  
+		    });  
 	}
 }

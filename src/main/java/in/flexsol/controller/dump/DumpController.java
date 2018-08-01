@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class DumpController {
 	    			 if(requestBody != null && requestBody.trim().toString().isEmpty() == false) {
 	    				 requestBody = requestBody.replaceAll("\n", "");
 	    				 requestBody = requestBody.replaceAll("\\s", "");
+	    				 requestBody = requestBody.replaceAll("\\\\", "");
 	    			 }
 	    			 dump.setDump(requestBody);
 			         dump.setOrigin(request.getRemoteAddr());
