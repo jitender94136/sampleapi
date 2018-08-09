@@ -7,6 +7,7 @@ public class Site {
 				private String siteId;
 				private int panelCount;
 				private int batteryCount;
+				private int batteryCapacity;
 				private double temparatureCoefficent;
 				private double efficiencyPerc;
 				private int panelPeakCapacity;
@@ -34,6 +35,13 @@ public class Site {
 				}
 				public void setBatteryCount(int batteryCount) {
 					this.batteryCount = batteryCount;
+				}
+				
+				public int getBatteryCapacity() {
+					return batteryCapacity;
+				}
+				public void setBatteryCapacity(int batteryCapacity) {
+					this.batteryCapacity = batteryCapacity;
 				}
 				public double getTemparatureCoefficent() {
 					return temparatureCoefficent;

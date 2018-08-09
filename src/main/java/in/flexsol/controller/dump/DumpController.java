@@ -72,6 +72,7 @@ public class DumpController {
 			 	 		 	 snapshot.put("panel_count", baseSiteData.getPanelCount());
 			    			 snapshot.put("battery_count", baseSiteData.getBatteryCount());
 			    			 snapshot.put("panel_peak_capacity", baseSiteData.getPanelPeakCapacity());
+			    			 snapshot.put("battery_capacity", baseSiteData.getBatteryCapacity());
 	    			 } 
 	    			 requestBody = snapshot.toString();
 	    			 dump.setDump(requestBody);
