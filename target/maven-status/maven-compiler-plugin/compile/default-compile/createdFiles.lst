@@ -1,0 +1,15 @@
+in\flexsol\modal\dump\Dump.class
+in\flexsol\dao\dump\DumpDao.class
+in\flexsol\delegate\dump\DumpService.class
+in\flexsol\modal\greeting\Greeting.class
+in\flexsol\service\greeting\GreetingService.class
+in\flexsol\controller\greeting\GreetingController.class
+in\flexsol\dao\dump\DumpRowMapper.class
+in\flexsol\dao\dump\DumpDaoImpl.class
+in\flexsol\delegate\dump\DumpServiceImpl.class
+in\flexsol\service\greeting\GreetingServiceImpl.class
+in\flexsol\Application.class
+in\flexsol\dao\greeting\GreetingDaoImpl.class
+in\flexsol\dao\greeting\GreetingDao.class
+in\flexsol\modal\site\Site.class
+in\flexsol\controller\dump\DumpController.class
