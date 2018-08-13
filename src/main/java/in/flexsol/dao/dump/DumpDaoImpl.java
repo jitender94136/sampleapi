@@ -37,30 +37,30 @@ public class DumpDaoImpl implements DumpDao {
 		
 		String sql = null;
 		if(createdgte == null && limit > 0 && offset > 0) {
-					sql = "select * from dump_master order by id limit ? offset ?";
-					return jdbcTemplate.query(sql, new Object[] {limit,offset}, new DumpRowMapper());
+					sql = "select * from dump_master where dump like ? order by id desc limit ? offset ?";
+					return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%",limit,offset}, new DumpRowMapper());
 		} else if(limit == 0 && offset == 0) {
-					sql = "select * from dump_master where  created_on >= ? order by id";
-					return jdbcTemplate.query(sql, new Object[] {createdgte}, new DumpRowMapper());
+					sql = "select * from dump_master where dump like ? and created_on >= ? order by id desc";
+					return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%",createdgte}, new DumpRowMapper());
 		} else if(createdgte == null && limit == 0 && offset > 0) {
-					sql = "select * from dump_master order by id  offset ?";
-					return jdbcTemplate.query(sql, new Object[] {offset}, new DumpRowMapper());
+					sql = "select * from dump_master where dump like ? order by id desc offset ?";
+					return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%",offset}, new DumpRowMapper());
 		} else if(createdgte != null && limit > 0 && offset == 0) {
-					sql = "select * from dump_master where created_on >= ? order by id  limit ? ";
-					return jdbcTemplate.query(sql, new Object[] {createdgte,limit}, new DumpRowMapper());
+					sql = "select * from dump_master where dump like ? created_on >= ? order by id desc limit ? ";
+					return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%",createdgte,limit}, new DumpRowMapper());
 		} else if(createdgte != null && limit == 0 && offset > 0) {
-			sql = "select * from dump_master where created_on >= ? order by id  offset ? ";
-			return jdbcTemplate.query(sql, new Object[] {createdgte,offset}, new DumpRowMapper());
+			sql = "select * from dump_master where dump like ? and created_on >= ? order by id desc offset ? ";
+			return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%",createdgte,offset}, new DumpRowMapper());
         } else {
-					sql = "select * from dump_master order by id  limit ? ";
-					return jdbcTemplate.query(sql, new Object[] {limit}, new DumpRowMapper());
+					sql = "select * from dump_master where dump like ? order by id desc limit ? ";
+					return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%",limit}, new DumpRowMapper());
 		}
 	}
 
 	@Override
 	public List<Dump> fetchAll() {
-		String sql = "select * from dump_master";
-		return jdbcTemplate.query(sql, new DumpRowMapper());  
+		String sql = "select * from dump_master where dump like ? order by id desc ";
+		return jdbcTemplate.query(sql, new Object[] {"%\"tid\":\"cmb\"%"}, new DumpRowMapper());  
 	}
 
 	@Override

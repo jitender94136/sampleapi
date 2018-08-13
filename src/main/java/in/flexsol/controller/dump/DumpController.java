@@ -2,7 +2,6 @@ package in.flexsol.controller.dump;
 
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +41,7 @@ public class DumpController {
 	    				 requestBody = requestBody.replace("d=", "d\":");
 	    				 //requestBody = requestBody.replaceAll("\\\\", "");
 	    			 }
-	    			 int randomSiteId = (int)getRandomIntegerBetweenRange(1.0,3.0);
+	    			 int randomSiteId = (int)getRandomIntegerBetweenRange(1.0,5.0);
 			 	 	 JSONObject snapshot = new JSONObject(requestBody);
 			 	 	 String currentSiteId = randomSiteId == 1 ? snapshot.getString("did") : snapshot.getString("did")+"-"+randomSiteId;
 			 	 	 snapshot.put("did",  currentSiteId);
@@ -73,7 +72,36 @@ public class DumpController {
 			    			 snapshot.put("battery_count", baseSiteData.getBatteryCount());
 			    			 snapshot.put("panel_peak_capacity", baseSiteData.getPanelPeakCapacity());
 			    			 snapshot.put("battery_capacity", baseSiteData.getBatteryCapacity());
-	    			 } 
+			    			 snapshot.put("dg_capacity", baseSiteData.getDgCapacity());
+			    			 snapshot.put("plant_capacity", baseSiteData.getPlantCapacity());
+			    			 if(snapshot.getInt("p1") > 0) {
+			    				    int totalPanelPower = snapshot.getInt("p1");
+			    				    if(totalPanelPower > 0) {
+			    				    		totalPanelPower = totalPanelPower * baseSiteData.getMultiplicationFactor();
+			    				    }
+			    				    snapshot.put("p1", totalPanelPower+"");
+			    			 }
+			    			 if(snapshot.getInt("p14") > 0) {
+			    				 	int generatedEnergy = snapshot.getInt("p14");
+			    				 	generatedEnergy = generatedEnergy * baseSiteData.getMultiplicationFactor();
+			    				 	snapshot.put("p14", generatedEnergy+"");
+			    			 }
+			    			 if(snapshot.getInt("p17") > 0) {
+		    				 		int storedEnergy = snapshot.getInt("p17");
+		    				 		storedEnergy = storedEnergy * baseSiteData.getMultiplicationFactor();
+		    				 		snapshot.put("p17", storedEnergy+"");
+		    			     }
+			    			 if(snapshot.getInt("p14") > 0) {
+					    			 	int energyConsumed = snapshot.getInt("p14")  - snapshot.getInt("p17");
+					    			 	if(energyConsumed > 0) {	
+					    			 		energyConsumed = (int)(energyConsumed * getRandomInteger(1.0));
+					    			 	}
+					    			 	snapshot.put("energy_consumed", energyConsumed);
+					    	 } else {
+					    		 		snapshot.put("energy_consumed",0);
+			    			 }
+			    			
+			    	 } 
 	    			 requestBody = snapshot.toString();
 	    			 dump.setDump(requestBody);
 			         dump.setOrigin(request.getRemoteAddr());

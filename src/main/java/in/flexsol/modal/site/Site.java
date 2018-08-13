@@ -12,8 +12,24 @@ public class Site {
 				private double efficiencyPerc;
 				private int panelPeakCapacity;
 				private String panelBrand;
+				private int dgCapacity;
+				private int plantCapacity;
+				private int multiplicationFactor;
+				
 				public int getId() {
 					return id;
+				}
+				public int getDgCapacity() {
+					return dgCapacity;
+				}
+				public void setDgCapacity(int dgCapacity) {
+					this.dgCapacity = dgCapacity;
+				}
+				public int getPlantCapacity() {
+					return plantCapacity;
+				}
+				public void setPlantCapacity(int plantCapacity) {
+					this.plantCapacity = plantCapacity;
 				}
 				public void setId(int id) {
 					this.id = id;
@@ -66,6 +82,12 @@ public class Site {
 				}
 				public void setEfficiencyPerc(double efficiencyPerc) {
 					this.efficiencyPerc = efficiencyPerc;
+				}
+				public int getMultiplicationFactor() {
+					return multiplicationFactor;
+				}
+				public void setMultiplicationFactor(int multiplicationFactor) {
+					this.multiplicationFactor = multiplicationFactor;
 				}
 				
 	
