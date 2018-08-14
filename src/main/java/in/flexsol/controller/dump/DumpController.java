@@ -84,18 +84,24 @@ public class DumpController {
 			    			 if(snapshot.getInt("p14") > 0) {
 			    				 	int generatedEnergy = snapshot.getInt("p14");
 			    				 	generatedEnergy = generatedEnergy * baseSiteData.getMultiplicationFactor();
-			    				 	snapshot.put("p14", generatedEnergy+"");
+			    				 	snapshot.put("p14", generatedEnergy+""); //generated energy in Wh
 			    			 }
 			    			 if(snapshot.getInt("p17") > 0) {
 		    				 		int storedEnergy = snapshot.getInt("p17");
 		    				 		storedEnergy = storedEnergy * baseSiteData.getMultiplicationFactor();
-		    				 		snapshot.put("p17", storedEnergy+"");
+		    				 		snapshot.put("p17", storedEnergy+""); //stored energy in Wh
 		    			     }
 			    			 if(snapshot.getInt("p14") > 0) {
 					    			 	int energyConsumed = snapshot.getInt("p14")  - snapshot.getInt("p17");
-					    			 	if(energyConsumed > 0) {	
-					    			 		energyConsumed = (int)(energyConsumed * getRandomInteger(1.0));
-					    			 	}
+					    			 	if(energyConsumed < 0) {
+					    			 				int generatedEnergy = snapshot.getInt("p14");  
+					    			 				int storedEnergy = snapshot.getInt("p17");
+					    			 				snapshot.put("p14", storedEnergy+"");
+					    			 				snapshot.put("p17", generatedEnergy+"");
+					    			 				energyConsumed = storedEnergy - generatedEnergy;
+					    			 	} 
+					    			 	double doubleEnergyConsumed = energyConsumed * getRandomDouble(1.0);
+				    			 		energyConsumed = (int) doubleEnergyConsumed; // energy consumed in Wh
 					    			 	snapshot.put("energy_consumed", energyConsumed);
 					    	 } else {
 					    		 		snapshot.put("energy_consumed",0);
@@ -133,6 +139,12 @@ public class DumpController {
 	    
 	    public static int getRandomInteger(double max){
 	        int x = (int)(Math.random() * max);
+	        return x;
+	    }
+	    
+	    public static double getRandomDouble(double max){
+	        double x = Math.random();
+	    	x = (x < 0.5 ? 0.7 : x) * max;
 	        return x;
 	    }
 	    
